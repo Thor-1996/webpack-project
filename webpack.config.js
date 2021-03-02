@@ -1,52 +1,83 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const webpack = require("webpack");
+const path = require("path");
+const resolve = (dir) => path.resolve(__dirname, dir);
+const HtmlWebpackPlugin = require("html-webpack-plugin"); //打包html的插件
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 module.exports = {
-  entry: {
-    app: "./src/index.js",
+  entry: "./src/main.js",
+  mode: "development",
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+          },
+          "css-loader",
+        ],
+      },
+      {
+        test: /\.less$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+          },
+          "css-loader",
+          "less-loader",
+        ],
+      },
+      {
+        test: /\.(png|jpg|gif|jpeg|svg)$/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "[name].[hash:8].[ext]",
+              outputPath: "img",
+              esModule: false,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.html$/,
+        use: {
+          loader: "html-loader",
+          options: {
+            attrs: ["img:src"],
+            minimize: true,
+          },
+        },
+      },
+    ],
   },
-  devtool: "inline-source-map",
-  devServer: {
-    contentBase: "./dist",
-    hot: true,
+  output: {
+    path: path.resolve(__dirname, "dist"),
+    filename: "[name].[hash].js",
+  },
+  resolve: {
+    // 设置别名
+    alias: {
+      "@": resolve("src"), // 这样配置后 @ 可以指向 src 目录
+    },
+  },
+  optimization: {
+    minimize: true,
+    minimizer: [new CssMinimizerPlugin()],
   },
   plugins: [
-    new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
     new HtmlWebpackPlugin({
-      title: "Output Management",
+      filename: "index.html",
+      template: "src/views/index.html",
     }),
-    new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
+    new CleanWebpackPlugin(),
+    new MiniCssExtractPlugin({
+      filename: "[name].css",
+      chunkFilename: "[id].css",
+    }),
   ],
-  output: {
-    filename: "[name].bundle.js",
-    path: path.resolve(__dirname, "dist"),
-    // publicPath: "./",
-  },
-  // module: {
-  //   rules: [
-  //     {
-  //       test: /\.css$/,
-  //       use: ["style-loader", "css-loader"],
-  //     },
-  //     {
-  //       test: /\.(png|svg|jpg|gif|jpeg)$/,
-  //       use: ["file-loader"],
-  //     },
-  //     {
-  //       test: /\.(woff|woff2|eot|ttf|otf)$/,
-  //       use: ["file-loader"],
-  //     },
-  //     {
-  //       test: /\.(csv|tsv)$/,
-  //       use: ["csv-loader"],
-  //     },
-  //     {
-  //       test: /\.xml$/,
-  //       use: ["xml-loader"],
-  //     },
-  //   ],
-  // },
 };
