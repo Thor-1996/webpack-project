@@ -1,3 +1,3 @@
 # webpack-project
-从零开始的webpack脚手架项目
 
+webpack4.x 从 0 开始搭建的仿 vue-cli 脚手架
