@@ -1,6 +1,8 @@
 <template>
   <div>
-    <router-view />
+    我是next
+
+    <button @click="$router.back()">返回</button>
   </div>
 </template>
 

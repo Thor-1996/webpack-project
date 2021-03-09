@@ -1,5 +1,5 @@
 {
-  "name": "TipPage",
+  "name": "my-vue-cli",
   "version": "1.0.0",
   "description": "",
   "private": true,
@@ -31,5 +31,8 @@
     "vue": "^2.6.12",
     "vue-loader": "^15.9.6",
     "vue-template-compiler": "^2.6.12"
+  },
+  "dependencies": {
+    "vue-router": "^3.5.1"
   }
 }
