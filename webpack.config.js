@@ -8,8 +8,12 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 
 module.exports = {
-  entry: "./src/main.js",
-  mode: "development",
+  entry: {
+    page1: "./src/main.js",
+  },
+  devServer: {
+    hot: true,
+  },
   module: {
     rules: [
       {
@@ -17,9 +21,9 @@ module.exports = {
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
-            // options: {
-            //   filename: "[name].[hash:8].css",
-            // },
+            options: {
+              filename: "[name].[hash:8].css",
+            },
           },
           "css-loader",
         ],
@@ -84,9 +88,10 @@ module.exports = {
     }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: "[name].css",
+      filename: "[name].[hash:8].css",
       chunkFilename: "[id].css",
     }),
     new VueLoaderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
   ],
 };

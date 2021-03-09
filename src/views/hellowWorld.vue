@@ -1,13 +1,20 @@
 <template>
   <div class="main">
+    <img :src="require('@/assets/tip.png')" style="width:100px" alt="" />
     <button class="sb-btn" @click="handleClick">点我</button>
+
+    <div>{{ count }}</div>
+
+    <button @click="count++">add</button>
   </div>
 </template>
 
 <script>
 export default {
   data() {
-    return {};
+    return {
+      count: 0,
+    };
   },
   methods: {
     handleClick() {
