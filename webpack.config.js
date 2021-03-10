@@ -7,7 +7,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 
-module.exports = {
+const config = {
   entry: {
     page1: "./src/main.js",
   },
@@ -88,7 +88,6 @@ module.exports = {
       filename: "index.html",
       template: "pubilc/index.html",
     }),
-    new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: "[name].[hash:8].css",
       chunkFilename: "[id].css",
@@ -96,4 +95,15 @@ module.exports = {
     new VueLoaderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
   ],
+};
+
+module.exports = (env, argv) => {
+  if (argv.mode === "development") {
+    config.devtool = "source-map";
+  }
+  if (argv.mode === "production") {
+    config.plugins.push(new CleanWebpackPlugin());
+  }
+
+  return config;
 };
