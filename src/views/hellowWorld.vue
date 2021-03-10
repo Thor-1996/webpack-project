@@ -3,20 +3,23 @@
     <img :src="require('@/assets/tip.png')" style="width:100px" alt="" />
     <button class="sb-btn" @click="handleClick">点我</button>
 
-    <div>{{ count }}</div>
-
-    <button @click="count++">add</button>
+    <button @click="getJson(1)">getJson1</button>
+    <button @click="getJson(2)">getJson2</button>
+    <button @click="getJson(3)">getJson3</button>
   </div>
 </template>
 
 <script>
 export default {
   data() {
-    return {
-      count: 0,
-    };
+    return {};
   },
   methods: {
+    getJson(val) {
+      import(`@/json/json${val}.json`).then(({ default: obj }) => {
+        console.log(obj);
+      });
+    },
     handleClick() {
       this.$router.push("/next");
     },

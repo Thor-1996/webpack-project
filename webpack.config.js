@@ -13,6 +13,7 @@ module.exports = {
   },
   devServer: {
     hot: true,
+    open: false,
   },
   module: {
     rules: [
@@ -70,6 +71,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "[name].[hash].js",
+    chunkFilename: "[name].chunk.js",
   },
   resolve: {
     // 设置别名
