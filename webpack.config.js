@@ -72,7 +72,6 @@ const config = {
       },
     ],
   },
-
   resolve: {
     // 设置别名
     alias: {
@@ -89,8 +88,8 @@ const config = {
       template: "pubilc/index.html",
     }),
     new MiniCssExtractPlugin({
-      filename: `${assetsDir}css/[name].[hash:8].css`,
-      chunkFilename: `${assetsDir}css/[id].[hash:8].css`,
+      filename: `${assetsDir}css/[name].chunk.[hash:8].css`,
+      chunkFilename: `${assetsDir}css/[id].chunk.[hash:8].css`,
     }),
     new VueLoaderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
