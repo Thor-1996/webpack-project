@@ -7,9 +7,16 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 
+const assetsDir = "static/";
+
 const config = {
   entry: {
     page1: "./src/main.js",
+  },
+  output: {
+    path: path.resolve(__dirname, "dist"),
+    filename: `${assetsDir}js/[name].[hash].js`,
+    chunkFilename: `${assetsDir}js/[name].chunk.[hash:8].js`,
   },
   devServer: {
     hot: true,
@@ -22,9 +29,6 @@ const config = {
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
-            options: {
-              filename: "[name].[hash:8].css",
-            },
           },
           "css-loader",
         ],
@@ -46,7 +50,7 @@ const config = {
             loader: "file-loader",
             options: {
               name: "[name].[hash:8].[ext]",
-              // outputPath: "img",
+              outputPath: `${assetsDir}img`,
               esModule: false,
             },
           },
@@ -68,11 +72,7 @@ const config = {
       },
     ],
   },
-  output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "[name].[hash].js",
-    chunkFilename: "[name].chunk.js",
-  },
+
   resolve: {
     // 设置别名
     alias: {
@@ -89,8 +89,8 @@ const config = {
       template: "pubilc/index.html",
     }),
     new MiniCssExtractPlugin({
-      filename: "[name].[hash:8].css",
-      chunkFilename: "[id].css",
+      filename: `${assetsDir}css/[name].[hash:8].css`,
+      chunkFilename: `${assetsDir}css/[id].[hash:8].css`,
     }),
     new VueLoaderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
