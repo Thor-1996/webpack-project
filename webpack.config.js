@@ -6,6 +6,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
+const FileListPlugin = require("thor-filelist-plugin");
 
 const assetsDir = "static/";
 
@@ -27,7 +28,7 @@ const config = {
       {
         test: /\.txt$/,
         use: {
-          loader: "zj-text-loader",
+          loader: "thor-text-loader",
           options: {
             name: "xuexing",
             age: 24,
@@ -103,6 +104,7 @@ const config = {
     }),
     new VueLoaderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
+    new FileListPlugin(),
   ],
 };
 
