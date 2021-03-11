@@ -6,6 +6,9 @@
 </template>
 
 <script>
+import test1 from "@/assets/test1.txt";
+console.log(test1);
+
 export default {
   data() {
     return {};

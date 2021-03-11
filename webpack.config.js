@@ -25,6 +25,16 @@ const config = {
   module: {
     rules: [
       {
+        test: /\.txt$/,
+        use: {
+          loader: "zj-text-loader",
+          options: {
+            name: "xuexing",
+            age: 24,
+          },
+        },
+      },
+      {
         test: /\.css$/,
         use: [
           {
